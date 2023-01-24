@@ -54,14 +54,13 @@ namespace Casino.Games.SlotGames
             else
             {
                 _transactionService.ReduceBalanceByBetAmount();
-                SpinSlot(this._slot);
-                PrintResult(this._slot);
-                CheckForWinnings(this._slot);
+                SpinSlot();
+                PrintResult();
+                CheckForWinnings();
             }
         }
 
-
-        private void PrintResult(char[][] slot)
+        private void PrintResult()
         {
             StringBuilder slotGameResult = new StringBuilder();
 
@@ -71,7 +70,7 @@ namespace Casino.Games.SlotGames
             {
                 for (int col = 0; col < this._cols; col++)
                 {
-                    slotGameResult.Append(slot[row][col]);
+                    slotGameResult.Append(this._slot[row][col]);
                 }
 
                 slotGameResult.AppendLine();
@@ -80,12 +79,12 @@ namespace Casino.Games.SlotGames
             this._console.WriteLine(slotGameResult.ToString());
         }
 
-        private void CheckForWinnings(char[][] slot)
+        private void CheckForWinnings()
         {
             decimal currentWinnings = 0;
             for (int row = 0; row < this._rows; row++)
             {
-                char[] rowItems = slot[row];
+                char[] rowItems = this._slot[row];
 
                 int wildCardsCount = rowItems.Count(x => x == GlobalConstants.WILDCARD_SYMBOL);
                 IEnumerable<char> distinctSymbols = rowItems.Distinct().Where(i => i != GlobalConstants.WILDCARD_SYMBOL);
@@ -114,7 +113,7 @@ namespace Casino.Games.SlotGames
             this._console.WriteLine($"{GlobalConstants.CHECK_BALANCE} {this._transactionService.Balance}");
         }
 
-        private void SpinSlot(char[][] slot)
+        private void SpinSlot()
         {
             for (int row = 0; row < this._rows; row++)
             {
@@ -126,7 +125,7 @@ namespace Casino.Games.SlotGames
                     {
                         if (currentNumber < threshold)
                         {
-                            slot[row][col] = symbol;
+                            this._slot[row][col] = symbol;
                             break;
                         }
                     }

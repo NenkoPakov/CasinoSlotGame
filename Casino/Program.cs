@@ -1,5 +1,4 @@
-﻿using Casino.Enums;
-using Casino.Services;
+﻿using Casino.Services;
 using Casino.Wrappers;
 
 namespace Casino
@@ -12,11 +11,7 @@ namespace Casino
             TransactionService transactionService = new TransactionService(consoleWrapper);
             GameManager gameManager = new GameManager(transactionService, consoleWrapper);
 
-            Actions selectedAction;
-            do
-            {
-                selectedAction = gameManager.BeginPlay(args, transactionService);
-            } while (selectedAction != Actions.Quit);
+            gameManager.BeginPlay(args, transactionService);
         }
     }
 }

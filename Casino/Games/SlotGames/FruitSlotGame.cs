@@ -1,11 +1,9 @@
-﻿using Casino.Attributes;
-using Casino.Models;
+﻿using Casino.Models;
 using Casino.Services;
 using Casino.Wrappers;
 
 namespace Casino.Games.SlotGames
 {
-    [SlotGame]
     public class FruitSlotGame : SlotGameBase
     {
         private static SlotItem[] slotItems = new SlotItem[]

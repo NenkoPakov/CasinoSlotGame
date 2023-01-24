@@ -1,10 +1,4 @@
-﻿using System.Reflection;
-using System.Text;
-using Casino.Attributes;
-using Casino.Enums;
-using Casino.Exceptions;
-using Casino.Extensions;
-using Casino.Games.Interfaces;
+﻿using Casino.Games.Interfaces;
 using Casino.Games.SlotGames;
 using Casino.Services;
 using Casino.Wrappers;
@@ -23,18 +17,17 @@ namespace Casino
             this._console = console;
         }
 
-        public Actions BeginPlay(string[] args, TransactionService transactionService)
+        public void BeginPlay(string[] args, TransactionService transactionService)
         {
             try
             {
                 IGame game = StartGame(args);
 
-                return PlayProcess(game);
+                PlayProcess(game);
             }
             catch (Exception ex)
             {
                 this._console.WriteLine(ex.Message);
-                return Actions.Unknown;
             }
         }
 
@@ -50,7 +43,7 @@ namespace Casino
             return new FruitSlotGame(rows, cols, this._numberGenerator, this._transactionService, this._console);
         }
 
-        private Actions PlayProcess(IGame choosenGame)
+        private void PlayProcess(IGame choosenGame)
         {
             while (true)
             {
@@ -68,7 +61,7 @@ namespace Casino
                     if (this._transactionService.Balance == 0)
                     {
                         choosenGame.Quit();
-                        return Actions.Quit;
+                        break;
                     }
                 }
                 catch (Exception ex)
